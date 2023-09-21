@@ -1,11 +1,13 @@
 import os
 import torch
 from dotenv import load_dotenv
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from utils.create_config import create_bnb_config
+
 
 load_dotenv()
 HF_TOKEN = os.environ.get("HF_TOKEN")
+
 
 
 def load_model_and_tokenizer(model_name_or_path: str):
@@ -21,8 +23,8 @@ def load_model_and_tokenizer(model_name_or_path: str):
     )
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_auth_token=HF_TOKEN)
     tokenizer.pad_token = tokenizer.eos_token # Llama model은 eos token을 pad token으로 사용함
-
+    tokenizer.padding_side = "right"
     return model, tokenizer
 
 if __name__ == "__main__":
-    load_model_and_tokenizer()
+    model, tokenizer = load_model_and_tokenizer("PY007/TinyLlama-1.1B-Chat-v0.1")
