@@ -9,7 +9,6 @@ from pathlib import Path
 from omegaconf import OmegaConf
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from utils.merge_weights import merge_weights
 
 wd = Path(__file__).parent.parent.resolve()
 sys.path.append(str(wd))
