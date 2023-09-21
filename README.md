@@ -1,11 +1,7 @@
 <h1 align="center">Training-Llama🦙</h1>
 <div align="center">
-  <strong>1.1B</strong>
+  <strong>Pre-training and Finetuning your own Llama!</strong>
 </div>
-
-<br/>
-Pre-training and Finetuning your own Llama!
-
 
 ## Install 
 ```
