@@ -1,0 +1,2 @@
+model:
+  name_or_path: "saved_models/TinyLlama-1.1B-Chat-v0.2/finetune_test/merged"
