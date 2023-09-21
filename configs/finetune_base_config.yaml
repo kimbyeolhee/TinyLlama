@@ -1,0 +1,9 @@
+setup:
+  device_number: "1"
+  seed: 42
+
+model:
+  name_or_path: "PY007/TinyLlama-1.1B-Chat-v0.2"
+
+data:
+  rawdata_path: "data/rawdata/evidence_1.csv"

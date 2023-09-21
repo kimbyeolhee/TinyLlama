@@ -1,0 +1,8 @@
+torch
+lightning
+accelerate
+transformers
+bitsandbytes
+datasets
+peft
+tokenizer == 0.13.3
