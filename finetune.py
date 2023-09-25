@@ -38,15 +38,15 @@ def train(model, tokenizer, dataset, config):
 
     # training arguments
     training_args = TrainingArguments(
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=4,
-        warmup_steps=2,
-        max_steps=15,
+        per_device_train_batch_size=config.train.per_device_train_batch_size,
+        gradient_accumulation_steps=config.train.gradient_accumulation_steps,
+        warmup_steps=config.train.warmup_steps,
+        # max_steps=500,
         output_dir=config.setup.output_dir,
-        # num_train_epochs=1,
-        learning_rate = 2e-4,
-        fp16=True,
-        optim = "paged_adamw_8bit", # 32bit
+        num_train_epochs=config.train.num_train_epochs,
+        learning_rate = config.train.learning_rate,
+        fp16=config.train.fp16,
+        optim = config.train.optim,
     )
 
     # train
@@ -82,7 +82,7 @@ def train(model, tokenizer, dataset, config):
 
 def main(config, device):
     model, tokenizer = load_model_and_tokenizer(config.model.name_or_path)
-    dataset = get_dataset(model, tokenizer, config.setup.seed)
+    dataset = get_dataset(model, tokenizer, config)
 
     train(model, tokenizer, dataset, config)
 

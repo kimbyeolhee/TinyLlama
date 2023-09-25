@@ -19,7 +19,13 @@ def inference(input_text, config):
     model = AutoModelForCausalLM.from_pretrained(config.model.name_or_path)
 
     tokenized_input = tokenizer(input_text, return_tensors="pt")
-    output = model.generate(input_ids=tokenized_input["input_ids"], attention_mask=tokenized_input["attention_mask"], max_length=50, num_beams=5, early_stopping=True)
+    # max_length 는 Prompt(LM의 초기 입력값)을 포함한 최대 길이를 지정하지만 max_new_tokens 는 Prompt를 제외한 ‘생성한' 문장의 최대 길이를 지정
+    output = model.generate(
+        input_ids=tokenized_input["input_ids"], 
+        attention_mask=tokenized_input["attention_mask"], 
+        max_new_tokens=config.inference.max_new_tokens, 
+        temperature=config.inference.temperature,
+        early_stopping=True)
 
     return tokenizer.decode(output[0], skip_special_tokens=True)
 
@@ -32,7 +38,19 @@ if __name__ == "__main__":
         f"{wd}/configs/{args.config}.yaml"
     )
 
-    input_text = "Can you provide a one-word answer to describe the role of the liver in activating alveolar macrophages during acute pancreatitis-induced lung injury?"
+    INTRO = "You are an expert in the field of Open Target and Drug Discovery. You are asked to answer the following question."
+    QUESTION_KEY = "### Question:"
+    CONTEXT_KEY = "### Context:"
+    ANSWER_KEY = "### Answer:"
+
+    intro = f"{INTRO}"
+    question = f"{QUESTION_KEY}\n{config.input.question}"
+    input_context = f"{CONTEXT_KEY}\n{config.input.context}" if config.input.context != "None" else None
+    answer = f"{ANSWER_KEY}\n"
+
+    parts = [intro, question, input_context, answer]
+    input_text = "\n\n".join([part for part in parts if part])
+    
     output = inference(input_text, config)
 
     print(output)
