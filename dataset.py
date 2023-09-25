@@ -87,11 +87,11 @@ def get_max_length(model):
     
 
     
-def get_dataset(model, tokenizer, seed):
+def get_dataset(model, tokenizer, config):
     """Return dataset for training"""
-    dataset = load_dataset("StoneSeller/OpenTarget_pubmed_qa_sample", split="train", use_auth_token=HF_TOKEN)
+    dataset = load_dataset(config.data.name_or_path, split="train", use_auth_token=HF_TOKEN)
     max_length = get_max_length(model)
-    dataset = preprocess_dataset(tokenizer, max_length, seed, dataset)
+    dataset = preprocess_dataset(tokenizer, max_length, config.setup.seed, dataset)
 
     return dataset
 
