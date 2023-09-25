@@ -4,9 +4,19 @@ setup:
   output_dir: "saved_models"
   experiment_name: "finetune_test"
 
+data:
+  rawdata_path: "data/rawdata/evidence_1.csv" # path for "notebooks/preprocess data format for finetuing.ipynb"
+  name_or_path: "StoneSeller/OpenTarget_pubmed_qa_sample"
+
 model:
   name_or_path: "PY007/TinyLlama-1.1B-Chat-v0.2"
 
+train:
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 4
+  warmup_steps: 2
+  num_train_epochs: 30
+  learning_rate: 2e-4
+  fp16: True
+  optim: "paged_adamw_8bit" # 32bit
 
-data:
-  rawdata_path: "data/rawdata/evidence_1.csv"
