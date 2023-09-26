@@ -8,13 +8,11 @@ from typing import Optional, Tuple, Union
 import math
 import torch
 from omegaconf import OmegaConf
-import lightning as L
-from lightning.fabric.strategies import FSDPStrategy, XLAStrategy
-from torch.utils.data import DataLoader
-from functools import partial
+
 
 ###
-from TinyLlama.model import GPT, Config
+from Llama.model import GPT
+from Llama.model_config import Config
 
 wd = Path(__file__).parent.parent.resolve()
 sys.path.append(str(wd))
@@ -34,8 +32,7 @@ if __name__ == "__main__":
     
     devices = config.device_num
     model_config = Config.from_name(config.model_name)
-    GPT(model_config)
-    # if devices > 1:
-    #     strategy = FSDPStrategy(
-    #         auto_wrap_policy={Block},
-    #     )
+
+    model = GPT(model_config)
+    print("🎆")
+    print(model)
