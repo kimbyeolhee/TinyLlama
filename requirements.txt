@@ -6,3 +6,6 @@ bitsandbytes
 datasets
 peft
 tokenizer == 0.13.3
+rotary-embedding-torch
+einops
+xformers
